@@ -1,0 +1,70 @@
+services:
+
+  proxy:
+    image: nginxproxy/nginx-proxy
+    container_name: mazai-proxy
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - ./proxy/certs:/etc/nginx/certs
+      - ./proxy/vhost:/etc/nginx/vhost.d
+      - ./proxy/html:/usr/share/nginx/html
+    labels:
+      - "com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy"
+    networks:
+      - mazai-network
+    restart: unless-stopped
+
+  letsencrypt:
+    image: nginxproxy/acme-companion
+    container_name: mazai-letsencrypt
+    depends_on:
+      - proxy
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./proxy/certs:/etc/nginx/certs
+      - ./proxy/vhost.d:/etc/nginx/vhost.d
+      - ./proxy/html:/usr/share/nginx/html
+    environment:
+      - NGINX_PROXY_CONTAINER=mazai-proxy
+    networks:
+      - mazai-network
+    restart: unless-stopped
+
+
+  api:
+    build: ./api
+    container_name: mazai-api
+    expose:
+      - "8001"
+    environment:
+      - VIRTUAL_HOST=mazai.dev
+      - VIRTUAL_PORT=8001
+      - VIRTUAL_PATH=/api
+      - LETSENCRYPT_HOST=mazai.dev
+      - LETSENCRYPT_EMAIL=gaetan.muck@gmail.com
+    networks:
+      - mazai-network
+    restart: unless-stopped
+
+
+  client:
+    build: ./client
+    container_name: mazai-client
+    expose:
+      - "8002"
+    environment:
+      - VIRTUAL_HOST=mazai.dev
+      - VIRTUAL_PORT=8002
+      - VIRTUAL_PATH=/
+      - LETSENCRYPT_HOST=mazai.dev
+      - LETSENCRYPT_EMAIL=gaetan.muck@gmail.com
+    networks:
+      - mazai-network
+    restart: unless-stopped
+
+networks:
+  mazai-network:
+    driver: bridge

@@ -1,0 +1,235 @@
+{
+  ".svelte-kit/generated/server/internal.js": {
+    "file": "internal.js",
+    "name": "internal",
+    "src": ".svelte-kit/generated/server/internal.js",
+    "isEntry": true,
+    "imports": [
+      "_internal.js",
+      "_internal2.js"
+    ]
+  },
+  "_Breadcrumbs.js": {
+    "file": "chunks/Breadcrumbs.js",
+    "name": "Breadcrumbs",
+    "imports": [
+      "_server.js"
+    ]
+  },
+  "_Icon.js": {
+    "file": "chunks/Icon.js",
+    "name": "Icon",
+    "imports": [
+      "_index-server.js",
+      "_server.js"
+    ]
+  },
+  "_env.js": {
+    "file": "chunks/env.js",
+    "name": "env"
+  },
+  "_exports.js": {
+    "file": "chunks/exports.js",
+    "name": "exports",
+    "imports": [
+      "_server.js"
+    ]
+  },
+  "_index-server.js": {
+    "file": "chunks/index-server.js",
+    "name": "index-server",
+    "imports": [
+      "_server.js"
+    ]
+  },
+  "_internal.js": {
+    "file": "chunks/internal.js",
+    "name": "internal"
+  },
+  "_internal2.js": {
+    "file": "chunks/internal2.js",
+    "name": "internal",
+    "imports": [
+      "_index-server.js",
+      "_internal.js",
+      "_server.js"
+    ]
+  },
+  "_root-context.js": {
+    "file": "chunks/root-context.js",
+    "name": "root-context",
+    "imports": [
+      "_index-server.js",
+      "_server.js"
+    ]
+  },
+  "_server.js": {
+    "file": "chunks/server.js",
+    "name": "server"
+  },
+  "_shared.js": {
+    "file": "chunks/shared.js",
+    "name": "shared"
+  },
+  "_use-list-collection.js": {
+    "file": "chunks/use-list-collection.js",
+    "name": "use-list-collection",
+    "imports": [
+      "_server.js",
+      "_root-context.js"
+    ]
+  },
+  "_utils.js": {
+    "file": "chunks/utils.js",
+    "name": "utils",
+    "imports": [
+      "_shared.js"
+    ]
+  },
+  "node_modules/@sveltejs/kit/src/runtime/app/server/remote/index.js": {
+    "file": "remote-entry.js",
+    "name": "remote-entry",
+    "src": "node_modules/@sveltejs/kit/src/runtime/app/server/remote/index.js",
+    "isEntry": true,
+    "imports": [
+      "_shared.js",
+      "_internal.js",
+      "_utils.js"
+    ]
+  },
+  "node_modules/@sveltejs/kit/src/runtime/components/svelte-5/error.svelte": {
+    "file": "entries/fallbacks/error.svelte.js",
+    "name": "entries/fallbacks/error.svelte",
+    "src": "node_modules/@sveltejs/kit/src/runtime/components/svelte-5/error.svelte",
+    "isEntry": true,
+    "imports": [
+      "_index-server.js",
+      "_shared.js",
+      "_internal.js",
+      "_internal2.js",
+      "_exports.js",
+      "_server.js"
+    ]
+  },
+  "node_modules/@sveltejs/kit/src/runtime/server/index.js": {
+    "file": "index.js",
+    "name": "index",
+    "src": "node_modules/@sveltejs/kit/src/runtime/server/index.js",
+    "isEntry": true,
+    "imports": [
+      "_shared.js",
+      "_internal.js",
+      "_utils.js",
+      "_internal2.js",
+      "_exports.js",
+      "_env.js"
+    ]
+  },
+  "src/routes/+layout.svelte": {
+    "file": "entries/pages/_layout.svelte.js",
+    "name": "entries/pages/_layout.svelte",
+    "src": "src/routes/+layout.svelte",
+    "isEntry": true,
+    "imports": [
+      "_server.js",
+      "_Icon.js"
+    ],
+    "css": [
+      "_app/immutable/assets/_layout.ZI32kZxq.css"
+    ]
+  },
+  "src/routes/+page.svelte": {
+    "file": "entries/pages/_page.svelte.js",
+    "name": "entries/pages/_page.svelte",
+    "src": "src/routes/+page.svelte",
+    "isEntry": true,
+    "imports": [
+      "_server.js"
+    ]
+  },
+  "src/routes/cellular-automata/+page.svelte": {
+    "file": "entries/pages/cellular-automata/_page.svelte.js",
+    "name": "entries/pages/cellular-automata/_page.svelte",
+    "src": "src/routes/cellular-automata/+page.svelte",
+    "isEntry": true,
+    "imports": [
+      "_server.js",
+      "_use-list-collection.js"
+    ]
+  },
+  "src/routes/cellular-automata/elementar-cellular-automaton/+page.svelte": {
+    "file": "entries/pages/cellular-automata/elementar-cellular-automaton/_page.svelte.js",
+    "name": "entries/pages/cellular-automata/elementar-cellular-automaton/_page.svelte",
+    "src": "src/routes/cellular-automata/elementar-cellular-automaton/+page.svelte",
+    "isEntry": true,
+    "imports": [
+      "_index-server.js",
+      "_server.js",
+      "_Breadcrumbs.js"
+    ],
+    "css": [
+      "_app/immutable/assets/_page.Cighfxds.css"
+    ]
+  },
+  "src/routes/cellular-automata/game-of-life/+page.svelte": {
+    "file": "entries/pages/cellular-automata/game-of-life/_page.svelte.js",
+    "name": "entries/pages/cellular-automata/game-of-life/_page.svelte",
+    "src": "src/routes/cellular-automata/game-of-life/+page.svelte",
+    "isEntry": true,
+    "imports": [
+      "_index-server.js",
+      "_server.js",
+      "_Breadcrumbs.js"
+    ],
+    "css": [
+      "_app/immutable/assets/_page.DicVa6Dx.css"
+    ]
+  },
+  "src/routes/evolution-simulations/+page.svelte": {
+    "file": "entries/pages/evolution-simulations/_page.svelte.js",
+    "name": "entries/pages/evolution-simulations/_page.svelte",
+    "src": "src/routes/evolution-simulations/+page.svelte",
+    "isEntry": true,
+    "imports": [
+      "_server.js",
+      "_use-list-collection.js"
+    ]
+  },
+  "src/routes/evolution-simulations/emojis/+page.svelte": {
+    "file": "entries/pages/evolution-simulations/emojis/_page.svelte.js",
+    "name": "entries/pages/evolution-simulations/emojis/_page.svelte",
+    "src": "src/routes/evolution-simulations/emojis/+page.svelte",
+    "isEntry": true,
+    "imports": [
+      "_index-server.js",
+      "_server.js"
+    ],
+    "css": [
+      "_app/immutable/assets/_page.DHsJLs5U.css"
+    ]
+  },
+  "src/routes/trading-backtests/+page.svelte": {
+    "file": "entries/pages/trading-backtests/_page.svelte.js",
+    "name": "entries/pages/trading-backtests/_page.svelte",
+    "src": "src/routes/trading-backtests/+page.svelte",
+    "isEntry": true,
+    "imports": [
+      "_index-server.js",
+      "_server.js",
+      "_Icon.js",
+      "_root-context.js"
+    ],
+    "css": [
+      "_app/immutable/assets/_page.BZYttRJJ.css"
+    ]
+  },
+  "virtual:__sveltekit/env": {
+    "file": "env.js",
+    "name": "env",
+    "src": "virtual:__sveltekit/env",
+    "isEntry": true,
+    "imports": [
+      "_env.js"
+    ]
+  }
+}

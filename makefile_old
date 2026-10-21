@@ -1,0 +1,106 @@
+include .env
+export
+
+APP_NAME=$(NAME)
+DOCKER_IMAGE=$(APP_NAME):latest
+REMOTE_IMAGE=$(APP_NAME):latest
+APP_PORT=$(PORT)
+
+save: push
+start: install-local start-streamlit-local
+start-docker: docker-stop-local docker-clean-local docker-build-local docker-run-local
+deploy: push upload docker-stop-vps docker-clean-vps docker-build-vps docker-run-vps
+
+
+
+### SSH ###
+
+# Generate SSH key locally and copy to VPS
+prepare-ssh:
+	@echo "[mazai-web] (local) > Generating SSH key and copying to VPS..."
+	@ssh-keygen -t ed25519 -N "" -f ~/.ssh/id_ed25519 >/dev/null 2>&1
+	@ssh-copy-id $(VPS_USER)@$(VPS_IP)
+
+# Connect to VPS via SSH
+ssh:
+	@echo "[mazai-web] > Connecting to VPS via SSH..."
+	@ssh $(VPS_USER)@$(VPS_IP)
+
+
+
+### CODEBASE ###
+
+# Save local changes to GitHub
+push:
+	@echo "[mazai-web] (local) > Pushing local changes to GitHub..."
+	@git add . > /dev/null 2>&1 
+	@git commit -m "Update on $$(date '+%Y-%m-%d %H:%M:%S')" > /dev/null 2>&1 || true
+	@git push origin main > /dev/null 2>&1
+
+# Upload current codebase to VPS
+upload:
+	@echo "[mazai-web] > Uploading local codebase to VPS..."
+	@rsync -avz --exclude='.git/' --exclude='__pycache__' --exclude='*.pyc' . $(VPS_USER)@$(VPS_IP):~/mazai-web > /dev/null 2>&1
+
+
+
+### LOCAL START ###
+
+# Install dependencies locally
+install-local:
+	@echo "[mazai-web] (local) > Installing Python dependencies..."
+	@pip install -r requirements.txt > /dev/null
+
+# Run Streamlit locally
+start-streamlit-local:
+	@echo "[mazai-web] (local) > Running Streamlit app..."
+	@streamlit run app/main.py
+
+
+
+### DOCKER LOCAL ###
+
+# Build Docker image locally
+docker-build-local:
+	@echo "[mazai-web] (local) > Building Docker image..."
+	@docker build -t $(DOCKER_IMAGE) . > /dev/null 2>&1
+
+# Run Docker container locally
+docker-run-local:
+	@echo "[mazai-web] (local) > Running Docker container..."
+	@docker run --name mazai-web -p $(APP_PORT):$(APP_PORT) $(DOCKER_IMAGE)
+
+# Stop running container of this image locally
+docker-stop-local:
+	@echo "[mazai-web] (local) > Stopping Docker container..."
+	@docker ps -q --filter ancestor=$(DOCKER_IMAGE) | xargs -r docker stop > /dev/null 2>&1
+
+# Removes containers + images of this app locally
+docker-clean-local:
+	@echo "[mazai-web] (local) > Removing Docker containers and images..."
+	@docker ps -aq --filter ancestor=$(DOCKER_IMAGE) | xargs -r docker rm -f > /dev/null 2>&1
+	@docker rmi -f $(DOCKER_IMAGE) > /dev/null 2>&1
+
+
+### DOCKER VPS ###
+
+# Build Docker image on VPS
+docker-build-vps:
+	@echo "[mazai-web] (vps) > Building Docker image..."
+	@ssh $(VPS_USER)@$(VPS_IP) "cd ~/mazai-web && docker build -t $(DOCKER_IMAGE) . > /dev/null 2>&1"
+
+# Run Docker container on VPS
+docker-run-vps:
+	@echo "[mazai-web] (vps) > Running Docker container..."
+	@ssh $(VPS_USER)@$(VPS_IP) "cd ~/mazai-web && docker run -d --rm -p $(APP_PORT):$(APP_PORT) $(DOCKER_IMAGE) > /dev/null 2>&1"
+
+# Stop running container of this image on the VPS
+docker-stop-vps:
+	@echo "[mazai-web] (vps) > Stopping Docker container..."
+	@ssh $(VPS_USER)@$(VPS_IP) "cd ~/mazai-web && docker ps -q --filter ancestor=$(DOCKER_IMAGE) | xargs -r docker stop > /dev/null 2>&1"
+
+# Removes containers + images of this app on the VPS
+docker-clean-vps:
+	@echo "[mazai-web] (vps) > Removing Docker containers and images..."
+	@ssh $(VPS_USER)@$(VPS_IP) "cd ~/mazai-web && docker ps -aq --filter ancestor=$(DOCKER_IMAGE) | xargs -r docker rm -f > /dev/null 2>&1"
+	@ssh $(VPS_USER)@$(VPS_IP) "cd ~/mazai-web && docker rmi -f $(DOCKER_IMAGE) > /dev/null 2>&1"

@@ -1,0 +1,1 @@
+export { default as component } from "../../../../src/routes/cellular-automata/game-of-life/+page.svelte";
