@@ -1,23 +1,41 @@
-node_modules
+# Dependencies
+node_modules/
 
-# Output
-.output
-.vercel
-.netlify
-.wrangler
-/.svelte-kit
-/build
+# SvelteKit / Vite
+client/.svelte-kit/
+build/
+dist/
 
-# OS
-.DS_Store
-Thumbs.db
-
-# Env
+# Environment variables and secrets
 .env
 .env.*
 !.env.example
 !.env.test
+*.pem
 
-# Vite
+# IDEs
+.vscode/
+.idea/
+
+# Build and deployment tools
+.output/
+.vercel/
+.netlify/
+.wrangler/
+
+# Logs
+.log
+npm-debug.log
+yarn-debug.log*
+pnpm-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Temporary Vite files
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
+
+# Docker local data (if applicable)
+docker-data/
